@@ -87,37 +87,78 @@ class TransactionController extends Controller
     }
 
     public function getLogs(Request $request)
-{
-    // Validate query parameters
-    $request->validate([
-        'type' => 'nullable|in:RAW,ACTUAL',
-        'from' => 'nullable|date',
-        'to' => 'nullable|date',
-    ]);
+    {
+        // Validate query parameters
+        $request->validate([
+            'type' => 'nullable|in:RAW,ACTUAL',
+            'from' => 'nullable|date',
+            'to' => 'nullable|date',
+        ]);
 
-    $query = TransactionLog::query();
+        $query = TransactionLog::query();
 
-    // Filter by type (RAW or ACTUAL)
-    if ($request->filled('type')) {
-        $query->where('type', $request->type);
+        // Filter by type (RAW or ACTUAL)
+        if ($request->filled('type')) {
+            $query->where('type', $request->type);
+        }
+
+        // Filter by date range
+        if ($request->filled('from')) {
+            $query->whereDate('created_at', '>=', $request->from);
+        }
+
+        if ($request->filled('to')) {
+            $query->whereDate('created_at', '<=', $request->to);
+        }
+
+        // order by newest first
+        $logs = $query->orderBy('created_at', 'desc')->get();
+
+        return response()->json([
+            'success' => true,
+            'count' => $logs->count(),
+            'data' => $logs,
+        ]);
     }
 
-    // Filter by date range
-    if ($request->filled('from')) {
-        $query->whereDate('created_at', '>=', $request->from);
+    public function getTransactions(Request $request)
+    {
+        // Validate query parameters
+        $request->validate([
+            'transaction_id' => 'sometimes|string',
+            'partner_id' => 'sometimes|string',
+            'from' => 'sometimes|date',
+            'to' => 'sometimes|date',
+        ]);
+
+        // Start building query
+        $query = \App\Models\SuccessfulTransaction::query();
+
+        // Filter by transaction_id
+        if ($request->filled('transaction_id')) {
+            $query->where('transaction_id', $request->transaction_id);
+        }
+
+        // Filter by partner_id
+        if ($request->filled('partner_id')) {
+            $query->where('partner_id', $request->partner_id);
+        }
+
+        // Filter by date range
+        if ($request->filled('from')) {
+            $query->whereDate('created_at', '>=', $request->from);
+        }
+        if ($request->filled('to')) {
+            $query->whereDate('created_at', '<=', $request->to);
+        }
+
+        // Get transactions ordered by latest first
+        $transactions = $query->orderBy('created_at', 'desc')->get();
+
+        return response()->json([
+            'count' => $transactions->count(),
+            'transactions' => $transactions
+        ]);
     }
 
-    if ($request->filled('to')) {
-        $query->whereDate('created_at', '<=', $request->to);
-    }
-
-    // Optional: order by newest first
-    $logs = $query->orderBy('created_at', 'desc')->get();
-
-    return response()->json([
-        'success' => true,
-        'count' => $logs->count(),
-        'data' => $logs,
-    ]);
-}
 }

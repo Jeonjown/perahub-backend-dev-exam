@@ -16,19 +16,27 @@ use App\Http\Controllers\API\TransactionController;
 // Authentication routes
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::post('/login', [AuthenticationController::class, 'login']);
-
+Route::middleware('auth:sanctum')->group(function () {
+  Route::post('/logout', [AuthenticationController::class, 'logout']);
+});
 
 // transaksyon
-Route::middleware( 'auth:sanctum')->group(function () {
-    Route::post('/inquire', [TransactionController::class, 'inquire']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/inquire', [TransactionController::class, 'inquire'])
+         ->middleware(Partners::class);
     Route::get('/logs', [TransactionController::class, 'getLogs']);
-
-
-    Route::post('/logout', [AuthenticationController::class, 'logout']);
+    Route::get('/transactions', [TransactionController::class, 'getTransactions']);
 
 });
 
 
+
+
+
+
+
+
+// middleware test only
 Route::post('/test-middleware', function (Request $request) {
     return response()->json([
         'message' => 'All middleware validations passed!',
