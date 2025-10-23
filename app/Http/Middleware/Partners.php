@@ -37,8 +37,6 @@ class Partners
         }
 
         $partners = collect($response->json('result'));
-        Log::info('Partners fetched:', $partners->toArray());
-        Log::info('Incoming partner code:', [$incomingCode]);
 
         // Find the partner that matches the incoming code
         $partner = $partners->first(fn($p) => ($p['partner_code'] ?? null) === $incomingCode);

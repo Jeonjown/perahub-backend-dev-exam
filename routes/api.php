@@ -10,12 +10,22 @@ use App\Http\Middleware\SourceOfFund;
 use App\Http\Controllers\API\AuthenticationController;
 use App\Http\Middleware\Relationship;
 
+use App\Http\Controllers\API\TransactionController;
+
+
 // Authentication routes
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::post('/login', [AuthenticationController::class, 'login']);
 
-Route::middleware('auth:sanctum')->group(function () {
+
+// transaksyon
+Route::middleware( 'auth:sanctum')->group(function () {
+    Route::post('/inquire', [TransactionController::class, 'inquire']);
+    Route::get('/logs', [TransactionController::class, 'getLogs']);
+
+
     Route::post('/logout', [AuthenticationController::class, 'logout']);
+
 });
 
 

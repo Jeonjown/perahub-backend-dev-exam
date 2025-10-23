@@ -37,8 +37,6 @@ class Purpose
         }
 
         $purposes = collect($response->json('result'));
-        Log::info('Purposes fetched:', $purposes->toArray());
-        Log::info('Incoming purpose:', [$incomingPurpose]);
 
         // Find the matching purpose
         $matchedPurpose = $purposes->first(fn($p) => ($p['purpose_of_remittance'] ?? null) === $incomingPurpose);

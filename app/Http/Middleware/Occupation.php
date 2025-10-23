@@ -37,8 +37,7 @@ class Occupation
         }
 
         $occupations = collect($response->json('result'));
-        Log::info('Occupations fetched:', $occupations->toArray());
-        Log::info('Incoming occupation:', [$incomingOccupation]);
+
 
         // Find the matching occupation
         $matchedOccupation = $occupations->first(fn($o) => ($o['occupation'] ?? null) === $incomingOccupation);
