@@ -33,6 +33,8 @@ Route::middleware('auth:sanctum')->group(function () {
             SourceOfFund::class,
             Relationship::class,
         ]);
+    Route::post('/payout', [TransactionController::class, 'payout'])
+    ->middleware();
     Route::get('/logs', [TransactionController::class, 'getLogs']);
     Route::get('/transactions', [TransactionController::class, 'getTransactions']);
 

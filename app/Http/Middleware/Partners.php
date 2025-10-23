@@ -16,7 +16,8 @@ class Partners
         $baseUrl = env('PERAHUB_BASE_URL');
         $token = env('PERAHUB_GATEWAY_TOKEN');
 
-        $incomingCode = $request->input('send_partner_code');
+       $incomingCode = $request->input('payout_partner_code') ?? $request->input('send_partner_code');
+
 
         // Concatenate the endpoint to the base URL
         $endpoint = $baseUrl . '/v1/remit/dmt/partner';
