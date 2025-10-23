@@ -12,4 +12,8 @@ class PendingTransaction extends Model
         'error_message',
         'status',
     ];
+
+    protected $casts = [
+    'request_body' => 'array',
+];
 }

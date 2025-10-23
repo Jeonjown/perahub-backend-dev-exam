@@ -24,6 +24,15 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/inquire', [TransactionController::class, 'inquire'])
          ->middleware(Partners::class);
+    Route::post('/send', [TransactionController::class, 'send'])
+        ->middleware([
+            Partners::class,
+            Purpose::class,
+            Occupation::class,
+            EmploymentNature::class,
+            SourceOfFund::class,
+            Relationship::class,
+        ]);
     Route::get('/logs', [TransactionController::class, 'getLogs']);
     Route::get('/transactions', [TransactionController::class, 'getTransactions']);
 

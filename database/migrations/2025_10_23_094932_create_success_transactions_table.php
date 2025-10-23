@@ -10,6 +10,7 @@ return new class extends Migration {
         Schema::create('success_transactions', function (Blueprint $table) {
             $table->id();
             $table->string('transaction_id')->nullable();
+            $table->string('partner_id')->nullable();
             $table->json('request_body');
             $table->json('response_body')->nullable();
             $table->timestamps();

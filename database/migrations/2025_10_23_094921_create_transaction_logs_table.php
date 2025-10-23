@@ -9,6 +9,7 @@ return new class extends Migration {
     {
         Schema::create('transaction_logs', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('partner_id')->nullable()->after('id');
             $table->enum('type', ['RAW', 'ACTUAL']);
             $table->string('endpoint');
             $table->json('request_body')->nullable();
