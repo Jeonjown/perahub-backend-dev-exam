@@ -36,7 +36,7 @@ class Relationship
             return response()->json(['error' => 'Invalid relationship'], 403);
         }
 
-        // Merge the full matched object
+        // Merge object
         $request->merge(['relationship_info' => $matchedRelationship]);
 
         return $next($request);

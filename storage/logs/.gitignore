@@ -1,2 +1,10 @@
 *
 !.gitignore
+
+.env
+*.sqlite
+*.sqlite3
+*.db
+
+/.env
+/.env.*

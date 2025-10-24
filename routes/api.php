@@ -7,9 +7,9 @@ use App\Http\Middleware\Purpose;
 use App\Http\Middleware\Occupation;
 use App\Http\Middleware\EmploymentNature;
 use App\Http\Middleware\SourceOfFund;
-use App\Http\Controllers\API\AuthenticationController;
 use App\Http\Middleware\Relationship;
 
+use App\Http\Controllers\API\AuthenticationController;
 use App\Http\Controllers\API\TransactionController;
 
 

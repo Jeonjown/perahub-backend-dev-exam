@@ -1,0 +1,11 @@
+*.sqlite
+*.sqlite3
+*.db
+
+.env
+
+/database/*.sqlite
+
+
+/.env
+/.env.*
